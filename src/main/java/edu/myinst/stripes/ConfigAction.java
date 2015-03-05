@@ -4,7 +4,7 @@ import blackboard.platform.plugin.PlugInUtil;
 import edu.myinst.config.Configuration;
 import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.controller.LifecycleStage;
-import com.alltheducks.configutils.*;
+import com.alltheducks.configutils.service.ConfigurationService;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
