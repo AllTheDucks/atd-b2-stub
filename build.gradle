@@ -12,7 +12,7 @@ apply plugin: 'war'
 
 
 task wrapper(type: Wrapper) {
-    gradleVersion = "1.11"
+    gradleVersion = "2.6"
 }
 
 if (isBuildingBlock()) {
