@@ -1,0 +1,11 @@
+-- CREATE OR REPLACE FUNCTION myu_stub_example_proc(
+--  aparam VARCHAR
+-- )
+--   RETURNS VOID AS $$
+-- DECLARE
+-- BEGIN
+--
+--
+--
+-- END;
+-- $$ LANGUAGE plpgsql;

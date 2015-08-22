@@ -50,6 +50,12 @@
             </application>
         </application-defs>
 
+        <!-- Uncomment this to use the database stuff -->
+        <!--<schema-dirs>-->
+            <!--<schema-dir dir-name="instance" /> &lt;!&ndash; BBLEARN / bb_bb60 etc.&ndash;&gt;-->
+            <!--&lt;!&ndash;<schema-dir dir-name="stats" database="stats" />&ndash;&gt; &lt;!&ndash; stats db &ndash;&gt;-->
+        <!--</schema-dirs>-->
+
         <entitlements>
             <entitlement uid="myu.stub.admin.MODIFY"
                          label="myu.stub.entitlement.system"

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<schema xmlns="http://www.blackboard.com/bb-schema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.blackboard.com/bb-schema http://fibbba.medu.com/xsd/bb-schema.xsd"
+        name="myu_stub" license="Course Delivery">
+    <comment>Database entities to support the building block.</comment>
+
+    <!--
+    Column data-types:
+    - bigint
+    - char(?)
+    - datetime
+    - float
+    - id
+    - image
+    - int
+    - integer
+    - ntext
+    - numeric
+    - numeric(?)
+    - nvarchar(?)
+    - text
+    - varchar(?)
+    -->
+
+    <table name="myu_stub_example">
+        <column name="pk1" data-type="id" nullable="false" identity="true" />
+        <column name="user_pk1" data-type="id" nullable="false" />
+        <column name="a_int" data-type="int" nullable="false" />
+        <column name="a_string" data-type="nvarchar(20)" />
+        <column name="a_date" data-type="datetime" />
+        <column name="a_bool" data-type="char(1)" default="'N'" nullable="false">
+            <value-constraint name="myu_stub_example_vc1">
+                <accepted-value value="Y"/>
+                <accepted-value value="N"/>
+            </value-constraint>
+        </column>
+
+        <primary-key name="myu_stub_example_pk">
+            <columnref name="pk1" />
+        </primary-key>
+
+        <foreign-key name="myu_stub_example_fk1" reference-table="users" on-delete="cascade">
+            <columnref name="user_pk1" />
+        </foreign-key>
+
+        <index name="myu_stub_example_ak1" unique="true">
+            <columnref name="a_int" />
+        </index>
+    </table>
+
+
+    <!--
+    Script types:
+    - post-schema-update
+    - post-update
+    - pre-update
+
+    - stored-procedures
+    - functions
+    - triggers
+    - views
+    -->
+
+    <stored-procedures>
+        <stored-procedure name="myu_stub_example_proc.sql" comment="Example procedure, in SQL Server dialect." availability="SqlServer" />
+        <stored-procedure name="myu_stub_example_proc.sql" comment="Example procedure, in Oracle dialect." availability="Oracle" />
+        <stored-procedure name="myu_stub_example_proc.sql" comment="Example procedure, in PostgreSQL dialect." availability="PostgreSQL" />
+    </stored-procedures>
+
+    <post-update>
+        <sql-script name="example.sql" comment="Example post update script, in SQL Server dialect." availability="SqlServer" />
+        <sql-script name="example.sql" comment="Example post update script, in Oracle dialect." availability="Oracle" />
+        <sql-script name="example.sql" comment="Example post update script, in PostgreSQL dialect." availability="PostgreSQL" />
+    </post-update>
+
+</schema>
