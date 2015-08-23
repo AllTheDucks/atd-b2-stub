@@ -49,6 +49,7 @@ dependencies {
     providedCompile 'jstl:jstl:1.2'
     providedCompile 'blackboard.platform:bb-platform:9.1.201404.160205'
     providedCompile 'blackboard.platform:bb-taglibs:9.1.201404.160205'
+    providedCompile 'com.google.guava:guava:16.0'
 
     testCompile "junit:junit:4.11"
 }
@@ -94,6 +95,18 @@ task initB2 << {
 //    def useJersey = System.console().readLine 'Do you want to use Jersey Web Services (Y, N)?'
 
     println "Initialising Building Block $vendorId-$b2Handle"
+
+    def b2DbHandle = b2Handle.replaceAll("-", "_")
+    def fullB2NameDb = vendorId + "_" + b2DbHandle
+
+    searchAndReplace("src/main/java/edu/myinst/model/Example.java", "myu_stub", fullB2NameDb)
+    searchAndReplace("src/main/webapp/schema/instance/schema.xml", "myu_stub", fullB2NameDb)
+    searchAndReplace("src/main/webapp/schema/instance/stored_procedures.db-mssql/myu_stub_example_proc.sql", "myu_stub", fullB2NameDb)
+    searchAndReplace("src/main/webapp/schema/instance/stored_procedures.db-oracle/myu_stub_example_proc.sql", "myu_stub", fullB2NameDb)
+    searchAndReplace("src/main/webapp/schema/instance/stored_procedures.db-pgsql/myu_stub_example_proc.sql", "myu_stub", fullB2NameDb)
+    searchAndReplaceFilename("src/main/webapp/schema/instance/stored_procedures.db-mssql/myu_stub_example_proc.sql", "myu_stub", fullB2NameDb)
+    searchAndReplaceFilename("src/main/webapp/schema/instance/stored_procedures.db-oracle/myu_stub_example_proc.sql", "myu_stub", fullB2NameDb)
+    searchAndReplaceFilename("src/main/webapp/schema/instance/stored_procedures.db-pgsql/myu_stub_example_proc.sql", "myu_stub", fullB2NameDb)
 
     // Fix packages in java files
     def packagePath = basePackage.replace(".", File.separator)
@@ -160,7 +173,6 @@ task initB2 << {
     searchAndReplace("src/main/webapp/WEB-INF/applicationContext.xml", "stub", b2Handle)
     searchAndReplace("src/main/webapp/WEB-INF/applicationContext.xml", "edu.myinst", basePackage)
 
-
     def command = """git remote rm origin"""
     def proc = command.execute()
     proc.waitFor()
@@ -179,4 +191,13 @@ def searchAndReplace(String targetFilePath, String search, String replace) {
     Files.delete(Paths.get(targetFilePath))
     Files.move(Paths.get("${targetFilePath}.tmp"),
             Paths.get(targetFilePath));
+}
+
+def searchAndReplaceFilename(String targetFilePath, String search, String replace) {
+    def file = new File(targetFilePath)
+    def oldName = file.name
+    def newName = file.name.replaceAll(search, replace)
+    if(oldName != newName) {
+        file.renameTo(new File(file.parentFile, newName));
+    }
 }

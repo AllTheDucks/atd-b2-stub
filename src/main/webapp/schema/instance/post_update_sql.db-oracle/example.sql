@@ -1,0 +1,1 @@
+-- Script to run in an Oracle db after the b2 update

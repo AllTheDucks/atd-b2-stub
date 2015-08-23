@@ -1,0 +1,8 @@
+-- CREATE PROCEDURE myu_stub_example_proc
+-- (
+--   @aparam VARCHAR
+-- )
+-- AS
+--   BEGIN
+--
+--   END
