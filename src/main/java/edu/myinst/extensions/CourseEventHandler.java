@@ -27,6 +27,7 @@ public class CourseEventHandler implements CourseEventListener {
      * @throws Exception
      */
     public void courseCloned(Id sourceId, Id targetId, CloneConfig cfg) throws Exception {
+        // Implement your custom logic here.
         System.out.println("Course Cloned. Source ID: " + sourceId.toExternalString() + " Target ID: " + targetId + " Clong Config: " + cfg.getLoggedOnUser());
     }
 
@@ -38,6 +39,7 @@ public class CourseEventHandler implements CourseEventListener {
      * @param courseId the Id of the newly created course.
      */
     public void courseCreated(Id courseId) {
+        // Implement your custom logic here.
         System.out.println("Course Created ID: " + courseId.toExternalString());
     }
 }

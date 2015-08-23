@@ -9,6 +9,10 @@
         <handle value="stub"/>
         <description value="plugin.description"/>
         <default-locale value="en_GB"/>
+        <!-- STUB_BLOCK_START COURSE_EVENT_LISTENER,RENDERING_HOOK -->
+        <!-- Uncomment the line below if you want to use extension points -->
+        <!--<webapp-type value="javaext" />-->
+        <!-- STUB_BLOCK_END COURSE_EVENT_LISTENER,RENDERING_HOOK -->
         <version value="1.0"/>
         <requires>
             <bbversion value="9.1"/>
@@ -51,24 +55,25 @@
         </application-defs>
 
 
-        <!-- STUB_BLOCK_START COURSE_EVENT_LISTENER,RENDERING_HOOK -->
-        <extension-defs>
-            <!-- STUB_BLOCK_START COURSE_EVENT_LISTENER -->
-            <definition namespace="blackboard.platform">
-                <extension id="myinstPostCloneCourseEventListener"
-                           point="blackboard.cmsadmin.postCloneCourseEventListener"
-                           class="edu.myinst.extensions.CourseEventHandler"
-                           singleton="true"/>
-            </definition>
-            <definition namespace="blackboard.platform">
-                <extension id="myinstPostCreateCourseEventListener"
-                           point="blackboard.cmsadmin.postCreateCourseEventListener"
-                           class="edu.myinst.extensions.CourseEventHandler"
-                           singleton="true"/>
-            </definition>
-            <!-- STUB_BLOCK_END COURSE_EVENT_LISTENER -->
-        </extension-defs>
-        <!-- STUB_BLOCK_END COURSE_EVENT_LISTENER,RENDERING_HOOK -->
+        <!-- Uncomment this block if you want to use the course event listener -->
+        <!--&lt;!&ndash; STUB_BLOCK_START COURSE_EVENT_LISTENER,RENDERING_HOOK &ndash;&gt;-->
+        <!--<extension-defs>-->
+            <!--&lt;!&ndash; STUB_BLOCK_START COURSE_EVENT_LISTENER &ndash;&gt;-->
+            <!--<definition namespace="blackboard.platform">-->
+                <!--<extension id="myinstPostCloneCourseEventListener"-->
+                           <!--point="blackboard.cmsadmin.postCloneCourseEventListener"-->
+                           <!--class="edu.myinst.extensions.CourseEventHandler"-->
+                           <!--singleton="true"/>-->
+            <!--</definition>-->
+            <!--<definition namespace="blackboard.platform">-->
+                <!--<extension id="myinstPostCreateCourseEventListener"-->
+                           <!--point="blackboard.cmsadmin.postCreateCourseEventListener"-->
+                           <!--class="edu.myinst.extensions.CourseEventHandler"-->
+                           <!--singleton="true"/>-->
+            <!--</definition>-->
+            <!--&lt;!&ndash; STUB_BLOCK_END COURSE_EVENT_LISTENER &ndash;&gt;-->
+        <!--</extension-defs>-->
+        <!--&lt;!&ndash; STUB_BLOCK_END COURSE_EVENT_LISTENER,RENDERING_HOOK &ndash;&gt;-->
 
         <entitlements>
             <entitlement uid="myu.stub.admin.MODIFY"
