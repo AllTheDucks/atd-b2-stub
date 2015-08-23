@@ -1,0 +1,9 @@
+-- CREATE OR REPLACE PROCEDURE myu_stub_example_proc(
+--  aparam VARCHAR
+-- )
+-- IS
+--   BEGIN
+--
+--
+--
+--   END;

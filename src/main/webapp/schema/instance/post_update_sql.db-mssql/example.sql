@@ -1,0 +1,1 @@
+-- Script to run in an MSSQL db after the b2 update
