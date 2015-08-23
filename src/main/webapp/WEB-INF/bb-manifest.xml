@@ -50,6 +50,21 @@
             </application>
         </application-defs>
 
+        <extension-defs>
+            <definition namespace="blackboard.platform">
+                <extension id="myinstPostCloneCourseEventListener"
+                           point="blackboard.cmsadmin.postCloneCourseEventListener"
+                           class="edu.myinst.extensions.CourseEventHandler"
+                           singleton="true"/>
+            </definition>
+            <definition namespace="blackboard.platform">
+                <extension id="myinstPostCreateCourseEventListener"
+                           point="blackboard.cmsadmin.postCreateCourseEventListener"
+                           class="edu.myinst.extensions.CourseEventHandler"
+                           singleton="true"/>
+            </definition>
+        </extension-defs>
+
         <entitlements>
             <entitlement uid="myu.stub.admin.MODIFY"
                          label="myu.stub.entitlement.system"
