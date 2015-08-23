@@ -92,8 +92,9 @@ task initB2 << {
     def b2Handle = System.console().readLine 'What is your B2 Handle (e.g. jshack, autosignon, etc) ? '
     def b2Name = System.console().readLine 'What is your B2 Name (e.g. Student View) ? '
     def basePackage = System.console().readLine 'What is the base java package of your project? (e.g. au.edu.uni.myproject) ? '
-//    def useStripes = System.console().readLine 'Do you want to use the Stripes Framework (Y, N)?'
-//    def useSpringDi = System.console().readLine 'Do you want to use Spring Beans (Y, N)?'
+//    def useStripes = System.console().readLine 'Do you want to use the Schema.xml (Y, N)?'
+//    def useSpringDi = System.console().readLine 'Do you want to use Rendering Hooks (Y, N)?'
+//    def useSpringDi = System.console().readLine 'Do you want to use Course Event Listeners (Y, N)?'
 //    def useJersey = System.console().readLine 'Do you want to use Jersey Web Services (Y, N)?'
 
     println "Initialising Building Block $vendorId-$b2Handle"
