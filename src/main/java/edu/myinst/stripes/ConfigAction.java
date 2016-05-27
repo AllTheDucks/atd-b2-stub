@@ -10,6 +10,8 @@ import com.alltheducks.configutils.service.ConfigurationService;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
@@ -18,6 +20,8 @@ import java.io.File;
 public class ConfigAction implements ActionBean {
 
     private ActionBeanContext context;
+
+    Logger logger = LoggerFactory.getLogger(ConfigAction.class);
 
     @ValidateNestedProperties({@Validate(field = "settingOne", required = true),
             @Validate(field = "settingTwo", required = true, minvalue = 0, maxvalue = 100)})
@@ -39,6 +43,7 @@ public class ConfigAction implements ActionBean {
     @DefaultHandler
     @DontValidate
     public Resolution displayConfigPage() {
+        logger.info("THIS IS A TEST THIS IS A TEST THIS IS A TES THIS IS A TEST");
         return new ForwardResolution("/WEB-INF/jsp/config.jsp");
     }
 
