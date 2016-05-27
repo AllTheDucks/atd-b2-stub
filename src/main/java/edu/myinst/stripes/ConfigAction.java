@@ -1,6 +1,8 @@
 package edu.myinst.stripes;
 
 import blackboard.platform.plugin.PlugInUtil;
+import com.alltheducks.bb.stripes.EntitlementRestrictions;
+import com.alltheducks.bb.stripes.LoginRequired;
 import edu.myinst.config.Configuration;
 import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.controller.LifecycleStage;
@@ -11,7 +13,8 @@ import net.sourceforge.stripes.validation.ValidateNestedProperties;
 
 import java.io.File;
 
-
+@LoginRequired
+@EntitlementRestrictions(entitlements = "myu.stub.admin.MODIFY", errorPage = "error.jsp")
 public class ConfigAction implements ActionBean {
 
     private ActionBeanContext context;
