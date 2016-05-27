@@ -40,7 +40,7 @@ dependencies {
     compile 'org.slf4j:slf4j-log4j12:1.7.5'
 
     compile 'com.thoughtworks.xstream:xstream:1.4.7'
-    compile 'net.sourceforge.stripes:stripes:1.5.7'
+    compile 'net.sourceforge.stripes:stripes:1.6.0'
     compile 'org.springframework:spring-beans:3.2.5.RELEASE'
     compile 'org.springframework:spring-web:3.2.5.RELEASE'
     compile files('lib/bb-stripes-utils-1.1.0.jar')

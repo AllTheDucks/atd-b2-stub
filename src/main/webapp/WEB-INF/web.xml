@@ -26,9 +26,10 @@
             <param-value>net.sourceforge.stripes.controller.multipart.CommonsMultipartWrapper</param-value>
         </init-param>
         <init-param>
-            <param-name>Interceptor.Classes</param-name>
+            <!-- changed based on https://github.com/StripesFramework/stripes/issues/33 -->
+            <param-name>Extension.Packages</param-name>
             <param-value>com.alltheducks.bb.stripes.interceptors.BlackboardSecurityInterceptor,
-                net.sourceforge.stripes.integration.spring.SpringInterceptor</param-value>
+                net.sourceforge.stripes.integration.spring</param-value>
         </init-param>
         <init-param>
             <param-name>LocalizationBundleFactory.Class</param-name>
