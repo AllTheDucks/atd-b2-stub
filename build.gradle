@@ -141,10 +141,10 @@ task initB2 << {
     new File("src/main/java/edu").deleteDir();
 
     // Fix up bb-manifest.xml
+    searchAndReplace("src/main/webapp/WEB-INF/bb-manifest.xml", "http://www.myu.edu/", vendorUrl)
     searchAndReplace("src/main/webapp/WEB-INF/bb-manifest.xml", "myu", vendorId)
     searchAndReplace("src/main/webapp/WEB-INF/bb-manifest.xml", "stub", b2Handle)
     searchAndReplace("src/main/webapp/WEB-INF/bb-manifest.xml", "My University", vendorName)
-    searchAndReplace("src/main/webapp/WEB-INF/bb-manifest.xml", "http://www.myu.edu/", vendorUrl)
     searchAndReplace("src/main/webapp/WEB-INF/bb-manifest.xml", "Joe Bloggs", System.getProperty("user.name"))
     searchAndReplace("src/main/webapp/WEB-INF/bb-manifest.xml", "helloworld", b2Handle)
     searchAndReplace("src/main/webapp/WEB-INF/bb-manifest.xml", "myapp", "${b2Handle}-app")
