@@ -108,13 +108,13 @@ task initB2 << {
     def fullB2NameDb = vendorId + "_" + b2DbHandle
 
     searchAndReplace("src/main/java/edu/myinst/model/Example.java", "myu_stub", fullB2NameDb)
-    searchAndReplace("src/main/webapp/schema/instance/schema.xml", "myu_stub", fullB2NameDb)
-    searchAndReplace("src/main/webapp/schema/instance/stored_procedures.db-mssql/myu_stub_example_proc.sql", "myu_stub", fullB2NameDb)
-    searchAndReplace("src/main/webapp/schema/instance/stored_procedures.db-oracle/myu_stub_example_proc.sql", "myu_stub", fullB2NameDb)
-    searchAndReplace("src/main/webapp/schema/instance/stored_procedures.db-pgsql/myu_stub_example_proc.sql", "myu_stub", fullB2NameDb)
-    searchAndReplaceFilename("src/main/webapp/schema/instance/stored_procedures.db-mssql/myu_stub_example_proc.sql", "myu_stub", fullB2NameDb)
-    searchAndReplaceFilename("src/main/webapp/schema/instance/stored_procedures.db-oracle/myu_stub_example_proc.sql", "myu_stub", fullB2NameDb)
-    searchAndReplaceFilename("src/main/webapp/schema/instance/stored_procedures.db-pgsql/myu_stub_example_proc.sql", "myu_stub", fullB2NameDb)
+    searchAndReplace("src/main/webapp/WEB-INF/schema/instance/schema.xml", "myu_stub", fullB2NameDb)
+    searchAndReplace("src/main/webapp/WEB-INF/schema/instance/stored_procedures.db-mssql/myu_stub_example_proc.sql", "myu_stub", fullB2NameDb)
+    searchAndReplace("src/main/webapp/WEB-INF/schema/instance/stored_procedures.db-oracle/myu_stub_example_proc.sql", "myu_stub", fullB2NameDb)
+    searchAndReplace("src/main/webapp/WEB-INF/schema/instance/stored_procedures.db-pgsql/myu_stub_example_proc.sql", "myu_stub", fullB2NameDb)
+    searchAndReplaceFilename("src/main/webapp/WEB-INF/schema/instance/stored_procedures.db-mssql/myu_stub_example_proc.sql", "myu_stub", fullB2NameDb)
+    searchAndReplaceFilename("src/main/webapp/WEB-INF/schema/instance/stored_procedures.db-oracle/myu_stub_example_proc.sql", "myu_stub", fullB2NameDb)
+    searchAndReplaceFilename("src/main/webapp/WEB-INF/schema/instance/stored_procedures.db-pgsql/myu_stub_example_proc.sql", "myu_stub", fullB2NameDb)
 
     // Fix packages in java files
     def packagePath = basePackage.replace(".", File.separator)
