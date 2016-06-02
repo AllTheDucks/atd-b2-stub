@@ -28,7 +28,7 @@
         <init-param>
             <!-- changed based on https://github.com/StripesFramework/stripes/issues/33 -->
             <param-name>Extension.Packages</param-name>
-            <param-value>com.alltheducks.bb.stripes.interceptors.BlackboardSecurityInterceptor,
+            <param-value>com.alltheducks.bb.stripes.interceptors,
                 net.sourceforge.stripes.integration.spring</param-value>
         </init-param>
         <init-param>

@@ -12,7 +12,7 @@ import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
 
 @LoginRequired
-@EntitlementRestrictions(entitlements = "myu.stub.admin.MODIFY", errorPage = "error.jsp")
+@EntitlementRestrictions(entitlements = "myu.stub.admin.MODIFY", errorPage = "/error.jsp")
 public class ConfigAction implements ActionBean {
 
     private ActionBeanContext context;

@@ -7,9 +7,10 @@
 <%@ taglib prefix="bbng" uri="/bbNG" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<fmt:message var="helloworldMessage" key="myapp.helloworldPage.message" />
+<fmt:message var="errorPageTitle" key="myapp.errorPage.title" />
+<fmt:message var="errorPageMessage" key="myapp.errorPage.message" />
 
 
-<bbNG:learningSystemPage ctxId="ctx">
-    <h1>An error has occurred.</h1>
+<bbNG:learningSystemPage ctxId="ctx" title="${errorPageTitle}">
+    <h2>${errorPageMessage}</h2>
 </bbNG:learningSystemPage>
