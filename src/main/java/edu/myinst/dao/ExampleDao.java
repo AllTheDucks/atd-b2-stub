@@ -1,4 +1,4 @@
-package edu.myinst.dao;
+package ${basePackage}.dao;
 
 import blackboard.persist.Id;
 import blackboard.persist.dao.impl.SimpleDAO;

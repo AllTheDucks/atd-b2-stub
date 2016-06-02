@@ -1,4 +1,4 @@
-package edu.myinst.extensions;
+package ${basePackage}.extensions;
 
 import blackboard.admin.persist.course.CloneConfig;
 import blackboard.admin.persist.course.CourseEventListener;

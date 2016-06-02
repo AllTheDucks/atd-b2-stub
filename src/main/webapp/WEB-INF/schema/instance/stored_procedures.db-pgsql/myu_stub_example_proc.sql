@@ -1,4 +1,4 @@
--- CREATE OR REPLACE FUNCTION myu_stub_example_proc(
+-- CREATE OR REPLACE FUNCTION ${fullB2NameDb}_example_proc(
 --  aparam VARCHAR
 -- )
 --   RETURNS VOID AS $$
