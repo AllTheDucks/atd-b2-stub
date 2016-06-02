@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-    Author     : Joe Bloggs
-    Copyright My University,  2014.
+    Author     : ${username}
+    Copyright ${vendorName},  2014.
 -->
 <manifest>
     <plugin>
         <name value="plugin.name"/>
-        <handle value="stub"/>
+        <handle value="${b2Handle}"/>
         <description value="plugin.description"/>
         <default-locale value="en_GB"/>
         <!-- STUB_BLOCK_START COURSE_EVENT_LISTENER,RENDERING_HOOK -->
@@ -18,10 +18,10 @@
             <bbversion value="9.1"/>
         </requires>
         <vendor>
-            <id value="myu"/>
-            <name value="My University"/>
-            <url value="http://www.myu.edu/"/>
-            <description value="My University"/>
+            <id value="${vendorId}"/>
+            <name value="${vendorName}"/>
+            <url value="${vendorUrl}"/>
+            <description value="${vendorName}"/>
         </vendor>
         <http-actions>
             <config value="Config.action"/>
@@ -30,25 +30,25 @@
 
 
         <application-defs>
-            <application handle="myapp" type="shared" name="plugin.tool.title">
+            <application handle="${b2Handle}" type="shared" name="plugin.tool.title">
                 <description>plugin.tool.description</description>
                 <links>
                     <link>
                         <type value="course_tool"/>
-                        <name value="plugin.link.helloworld.name"/>
+                        <name value="plugin.link.${b2Handle}.name"/>
                         <url value="Tool.action"/>
-                        <handle value="helloworld"/>
+                        <handle value="${b2Handle}"/>
                         <description
-                                value="plugin.link.helloworld.description"/>
+                                value="plugin.link.${b2Handle}.description"/>
                     </link>
                     <link>
                         <type value="nav_handle_param"/>
-                        <name value="plugin.link.helloworldconfig.name"/>
+                        <name value="plugin.link.${b2Handle}config.name"/>
                         <url value="Config.action"/>
                         <navhandle value="admin_plugin_manage"/>
-                        <handle value="helloworldconfig"/>
+                        <handle value="${b2Handle}config"/>
                         <description
-                                value="plugin.link.helloworldconfig.description"/>
+                                value="plugin.link.${b2Handle}config.description"/>
                     </link>
                 </links>
             </application>
@@ -62,13 +62,13 @@
             <!--<definition namespace="blackboard.platform">-->
                 <!--<extension id="myinstPostCloneCourseEventListener"-->
                            <!--point="blackboard.cmsadmin.postCloneCourseEventListener"-->
-                           <!--class="edu.myinst.extensions.CourseEventHandler"-->
+                           <!--class="${basePackage}.extensions.CourseEventHandler"-->
                            <!--singleton="true"/>-->
             <!--</definition>-->
             <!--<definition namespace="blackboard.platform">-->
                 <!--<extension id="myinstPostCreateCourseEventListener"-->
                            <!--point="blackboard.cmsadmin.postCreateCourseEventListener"-->
-                           <!--class="edu.myinst.extensions.CourseEventHandler"-->
+                           <!--class="${basePackage}.extensions.CourseEventHandler"-->
                            <!--singleton="true"/>-->
             <!--</definition>-->
             <!--&lt;!&ndash; STUB_BLOCK_END COURSE_EVENT_LISTENER &ndash;&gt;-->
@@ -83,8 +83,8 @@
 
 
         <entitlements>
-            <entitlement uid="myu.stub.admin.MODIFY"
-                         label="myu.stub.entitlement.system"
+            <entitlement uid="${vendorId}.${b2Handle}.admin.MODIFY"
+                         label="${vendorId}.${b2Handle}.entitlement.system"
                          type="System"
                          template="system.plugin.MODIFY"/>
         </entitlements>

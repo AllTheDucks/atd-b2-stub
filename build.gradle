@@ -61,6 +61,19 @@ dependencies {
     testCompile "junit:junit:4.11"
 }
 
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.freemarker:freemarker:2.3.23'
+    }
+}
+
+import freemarker.template.Template
+import freemarker.template.TemplateExceptionHandler
+
+
 ant.taskdef(name: 'b2deploy', classname: 'org.oscelot.ant.B2DeployTask', classpath: configurations.b2deploy.asPath)
 
 task deployb2(dependsOn: 'war') << {
@@ -91,18 +104,30 @@ task initB2 << {
         logger.error("Can't get console!")
         return
     }
-    def vendorId = System.console().readLine '\nWhat is your Vendor Id (e.g. usq, unsw, qut, swin, etc) ? '
-    def vendorName = System.console().readLine 'What is your Vendor Name (e.g. University of Antarctica) ? '
-    def vendorUrl = System.console().readLine 'What is your Vendor Website (e.g. http://www.myu.edu.au/) ? '
-    def b2Handle = System.console().readLine 'What is your B2 Handle (e.g. jshack, autosignon, etc) ? '
-    def b2Name = System.console().readLine 'What is your B2 Name (e.g. Student View) ? '
-    def basePackage = System.console().readLine 'What is the base java package of your project? (e.g. au.edu.uni.myproject) ? '
+    def vendorId = 'atd'//System.console().readLine '\nWhat is your Vendor Id (e.g. usq, unsw, qut, swin, etc) ? '
+    def vendorName = 'All The Ducks'//System.console().readLine 'What is your Vendor Name (e.g. University of Antarctica) ? '
+    def vendorUrl = 'http://www.alltheducks.com'//System.console().readLine 'What is your Vendor Website (e.g. http://www.myu.edu.au/) ? '
+    def b2Handle = 'blah'//System.console().readLine 'What is your B2 Handle (e.g. jshack, autosignon, etc) ? '
+    def b2Name = 'Blah'//System.console().readLine 'What is your B2 Name (e.g. Student View) ? '
+    def basePackage = 'com.alltheducks.blah'//System.console().readLine 'What is the base java package of your project? (e.g. au.edu.uni.myproject) ? '
 //    def useStripes = System.console().readLine 'Do you want to use the Schema.xml (Y, N)?'
 //    def useSpringDi = System.console().readLine 'Do you want to use Rendering Hooks (Y, N)?'
 //    def useSpringDi = System.console().readLine 'Do you want to use Course Event Listeners (Y, N)?'
 //    def useJersey = System.console().readLine 'Do you want to use Jersey Web Services (Y, N)?'
 
     println "Initialising Building Block $vendorId-$b2Handle"
+
+    def (freemarker.template.Configuration cfg, Map<String, Object> root) = initFreemarker(vendorId, vendorName, vendorUrl, b2Handle, b2Name, basePackage);
+
+    // commented out the following bb manifest methods to get the freemarker templating started
+//    searchAndReplace("src/main/webapp/WEB-INF/bb-manifest.xml", "http://www.myu.edu/", vendorUrl)
+//    searchAndReplace("src/main/webapp/WEB-INF/bb-manifest.xml", "myu", vendorId)
+//    searchAndReplace("src/main/webapp/WEB-INF/bb-manifest.xml", "stub", b2Handle)
+//    searchAndReplace("src/main/webapp/WEB-INF/bb-manifest.xml", "My University", vendorName)
+//    searchAndReplace("src/main/webapp/WEB-INF/bb-manifest.xml", "Joe Bloggs", System.getProperty("user.name"))
+//    searchAndReplace("src/main/webapp/WEB-INF/bb-manifest.xml", "helloworld", b2Handle)
+//    searchAndReplace("src/main/webapp/WEB-INF/bb-manifest.xml", "myapp", "${b2Handle}-app")
+    processFreemarkerFile(cfg, root, "./src/main/webapp/WEB-INF/bb-manifest.xml")
 
     def b2DbHandle = b2Handle.replaceAll("-", "_")
     def fullB2NameDb = vendorId + "_" + b2DbHandle
@@ -140,17 +165,6 @@ task initB2 << {
 
     new File("src/main/java/edu").deleteDir();
 
-    // Fix up bb-manifest.xml
-    searchAndReplace("src/main/webapp/WEB-INF/bb-manifest.xml", "http://www.myu.edu/", vendorUrl)
-    searchAndReplace("src/main/webapp/WEB-INF/bb-manifest.xml", "myu", vendorId)
-    searchAndReplace("src/main/webapp/WEB-INF/bb-manifest.xml", "stub", b2Handle)
-    searchAndReplace("src/main/webapp/WEB-INF/bb-manifest.xml", "My University", vendorName)
-    searchAndReplace("src/main/webapp/WEB-INF/bb-manifest.xml", "Joe Bloggs", System.getProperty("user.name"))
-    searchAndReplace("src/main/webapp/WEB-INF/bb-manifest.xml", "helloworld", b2Handle)
-    searchAndReplace("src/main/webapp/WEB-INF/bb-manifest.xml", "myapp", "${b2Handle}-app")
-
-
-
     searchAndReplace("src/main/webapp/WEB-INF/bundles/bb-manifest-en_GB.properties", "My Cool Building Block", b2Name)
     searchAndReplace("src/main/webapp/WEB-INF/bundles/bb-manifest-en_GB.properties", "Hello World", b2Name)
     searchAndReplace("src/main/webapp/WEB-INF/bundles/bb-manifest-en_GB.properties", "helloworld", b2Handle)
@@ -187,6 +201,46 @@ task initB2 << {
 
     println "${proc.err.text}"
     println "${proc.in.text}"
+}
+
+def initFreemarker(String vendorId, String vendorName, String vendorUrl, String b2Handle, String b2Name, String basePackage) {
+
+    /**
+     * Init a configuration object for freemarker
+     * http://freemarker.org/docs/pgui_quickstart_createconfiguration.html
+     */
+    freemarker.template.Configuration cfg = new freemarker.template.Configuration(freemarker.template.Configuration.VERSION_2_3_23)
+    cfg.setDirectoryForTemplateLoading(new File('.'))
+    cfg.setDefaultEncoding('UTF-8')
+    cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER)
+
+    // Don't log exceptions inside FreeMarker that it will thrown at you anyway
+    cfg.setLogTemplateExceptions(false);
+
+    /**
+     * Create the data model
+     * http://freemarker.org/docs/pgui_quickstart_createdatamodel.html
+     */
+    Map<String, Object> root = new HashMap<>();
+    root.put("vendorId", vendorId)
+    root.put("vendorName", vendorName)
+    root.put("vendorUrl", vendorUrl)
+    root.put("b2Handle", b2Handle)
+    root.put("b2Name", b2Name)
+    root.put("basePackage", basePackage)
+    root.put("username", System.getProperty("user.name"))
+
+    return [cfg, root];
+
+}
+
+def processFreemarkerFile(freemarker.template.Configuration cfg, Map<String, Object> root, String filepath) {
+
+    Template template = cfg.getTemplate(filepath)
+    FileWriter out = new FileWriter(new File(filepath))
+    template.process(root, out)
+    out.close()
+
 }
 
 def searchAndReplace(String targetFilePath, String search, String replace) {
