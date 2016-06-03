@@ -9,10 +9,10 @@
         <handle value="${b2Handle}"/>
         <description value="plugin.description"/>
         <default-locale value="en_GB"/>
-        <!-- STUB_BLOCK_START COURSE_EVENT_LISTENER,RENDERING_HOOK -->
-        <!-- Uncomment the line below if you want to use extension points -->
-        <!--<webapp-type value="javaext" />-->
-        <!-- STUB_BLOCK_END COURSE_EVENT_LISTENER,RENDERING_HOOK -->
+        <#if useCourseEventListener>
+         <!--   extension points -->
+        <webapp-type value="javaext" />
+        </#if>
         <version value="1.0"/>
         <requires>
             <bbversion value="9.1"/>
@@ -55,32 +55,31 @@
         </application-defs>
 
 
-        <!-- Uncomment this block if you want to use the course event listener -->
-        <!--&lt;!&ndash; STUB_BLOCK_START COURSE_EVENT_LISTENER,RENDERING_HOOK &ndash;&gt;-->
-        <!--<extension-defs>-->
-            <!--&lt;!&ndash; STUB_BLOCK_START COURSE_EVENT_LISTENER &ndash;&gt;-->
-            <!--<definition namespace="blackboard.platform">-->
-                <!--<extension id="myinstPostCloneCourseEventListener"-->
-                           <!--point="blackboard.cmsadmin.postCloneCourseEventListener"-->
-                           <!--class="${basePackage}.extensions.CourseEventHandler"-->
-                           <!--singleton="true"/>-->
-            <!--</definition>-->
-            <!--<definition namespace="blackboard.platform">-->
-                <!--<extension id="myinstPostCreateCourseEventListener"-->
-                           <!--point="blackboard.cmsadmin.postCreateCourseEventListener"-->
-                           <!--class="${basePackage}.extensions.CourseEventHandler"-->
-                           <!--singleton="true"/>-->
-            <!--</definition>-->
-            <!--&lt;!&ndash; STUB_BLOCK_END COURSE_EVENT_LISTENER &ndash;&gt;-->
-        <!--</extension-defs>-->
-        <!--&lt;!&ndash; STUB_BLOCK_END COURSE_EVENT_LISTENER,RENDERING_HOOK &ndash;&gt;-->
+        <#if useCourseEventListener>
+        <!-- course event listener -->
+        <extension-defs>
+            <definition namespace="blackboard.platform">
+                <extension id="${b2Handle}PostCloneCourseEventListener"
+                           point="blackboard.cmsadmin.postCloneCourseEventListener"
+                           class="${basePackage}.extensions.CourseEventHandler"
+                           singleton="true"/>
+            </definition>
+            <definition namespace="blackboard.platform">
+                <extension id="${b2Handle}PostCreateCourseEventListener"
+                           point="blackboard.cmsadmin.postCreateCourseEventListener"
+                           class="${basePackage}.extensions.CourseEventHandler"
+                           singleton="true"/>
+            </definition>
+        </extension-defs>
+        </#if>
 
-        <!-- Uncomment this to use the database stuff -->
-        <!--<schema-dirs>-->
-            <!--<schema-dir dir-name="instance" /> &lt;!&ndash; BBLEARN / bb_bb60 etc.&ndash;&gt;-->
-            <!--&lt;!&ndash;<schema-dir dir-name="stats" database="stats" />&ndash;&gt; &lt;!&ndash; stats db &ndash;&gt;-->
-        <!--</schema-dirs>-->
-
+        <#if useSchema>
+        <!-- database schemas -->
+        <schema-dirs>
+            <schema-dir dir-name="instance" /> <!-- BBLEARN / bb_bb60 etc.-->
+            <!--<schema-dir dir-name="stats" database="stats" />--> <!-- stats db -->
+        </schema-dirs>
+        </#if>
 
         <entitlements>
             <entitlement uid="${vendorId}.${b2Handle}.admin.MODIFY"
