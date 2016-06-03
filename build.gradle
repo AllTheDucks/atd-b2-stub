@@ -3,6 +3,7 @@ import freemarker.template.TemplateExceptionHandler
 
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.util.Map.Entry
 
 /**
  * The initial build.gradle file
@@ -27,20 +28,45 @@ task initB2 << {
         return
     }
 
-    def Map<String, Object> root = new HashMap<>();
+    def Map<String, Object> defaults = new HashMap<>()
+    def Map<String, Object> root = new HashMap<>()
+
+    def defaultsFile = Paths.get(System.getProperty('user.home') + '/.atd-b2-stub-defaults.properties')
+    if (Files.exists(defaultsFile)) {
+        Properties defaultProperties = new Properties();
+        defaultProperties.load(new ByteArrayInputStream(Files.readAllBytes(defaultsFile)))
+        for (final Entry<Object, Object> entry : defaultProperties.entrySet()) {
+            defaults.put(entry.getKey().toString(), entry.getValue())
+        }
+    }
+
+    if (!defaults.isEmpty()) {
+        println('Defaults found for generating building block')
+    }
 
     root.put('username', System.getProperty('user.name'))
-    root.put('vendorId', askStrictQuestion('\nWhat is your Vendor Id (e.g. usq, unsw, qut, swin, etc)?'))
-    root.put('vendorName', askQuestion('What is your Vendor Name (e.g. University of Antarctica)?'))
-    root.put('vendorUrl', askStrictQuestion('What is your Vendor Website (e.g. http://www.myu.edu.au/)?'))
-    root.put('b2Handle', askStrictQuestion('What is your B2 Handle (e.g. jshack, autosignon, etc)?'))
-    root.put('b2Name', askQuestion('What is your B2 Name (e.g. Student View)?'))
-    root.put('basePackage', askStrictQuestion('What is the base java package of your project? (e.g. au.edu.uni.myproject) ?'))
+    root.put('vendorId', askStrictQuestion('\nWhat is your Vendor Id (e.g. usq, unsw, qut, swin, etc)?', defaults.get('vendorId')))
+    root.put('vendorName', askQuestion('What is your Vendor Name (e.g. University of Antarctica)?', defaults.get('vendorName')))
+    root.put('vendorUrl', askStrictQuestion('What is your Vendor Website (e.g. http://www.myu.edu.au/)?', defaults.get('vendorUrl')))
+    root.put('b2Handle', askStrictQuestion('What is your B2 Handle (e.g. jshack, autosignon, etc)?', null))
+    root.put('b2Name', askQuestion('What is your B2 Name (e.g. Student View)?', null))
+    root.put('basePackage', askStrictQuestion('What is the base java package of your project? (e.g. au.edu.uni.myproject) ?', null))
+
+    if (defaults.isEmpty()) {
+        println('Saving these answers as default for next time')
+        Properties properties = new Properties();
+        properties.putAll(root)
+        OutputStream out = new FileOutputStream(new File(System.getProperty('user.home') + '/.atd-b2-stub-defaults.properties'))
+        properties.store(out, 'Default values when creating blackboard building blocks')
+    }
+
     root.put('useCourseEventListener', askYNQuestion('Do you want to use the course event listener?'))
     root.put('useSchema', askYNQuestion('Do you want to use the Schema.xml?'))
+//    def useSpringDi = System.console().readLine 'Do you want to use Rendering Hooks (Y, N)?'
+
+
     root.put('b2DbHandle', root.get('b2Handle').toString().replaceAll("-", "_"))
     root.put('fullB2NameDb', root.get('vendorId') + '_' + root.get('b2DbHandle'))
-//    def useSpringDi = System.console().readLine 'Do you want to use Rendering Hooks (Y, N)?'
 
     println "Initialising Building Block $root.vendorId-$root.b2Handle"
 
@@ -112,15 +138,21 @@ boolean askYNQuestion(String question) {
     return System.console().readLine(question + ' (Y/N) ').trim().toLowerCase() == 'y'
 }
 
-String askQuestion(String question) {
+String askQuestion(String question, Object defaultValue) {
+    if (defaultValue != null) {
+        String result =  System.console().readLine(question + ' ' + '[' + defaultValue + '] ').trim()
+        if (result.isEmpty()) {
+            return defaultValue;
+        }
+    }
     return System.console().readLine(question + ' ').trim()
 }
 
-String askStrictQuestion(String question) {
-    String answer = askQuestion(question)
+String askStrictQuestion(String question, Object defaultValue) {
+    String answer = askQuestion(question, defaultValue)
     while (answer.contains(' ')) {
         System.console().printf('Spaces are not allowed for this question.')
-        answer = askQuestion(question)
+        answer = askQuestion(question, defaultValue)
     }
     return answer
 }
