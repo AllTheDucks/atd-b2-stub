@@ -35,8 +35,8 @@ dependencies {
     compile ('net.sourceforge.stripes:stripes:1.6.0') {
         exclude module: 'log4j' // The log4j interface is implemented by org.slf4j:log4j-over-slf4j
     }
-    compile 'org.springframework:spring-beans:3.2.5.RELEASE'
-    compile 'org.springframework:spring-web:3.2.5.RELEASE'
+    compile 'org.springframework:spring-beans:4.3.0.RELEASE'
+    compile 'org.springframework:spring-web:4.3.0.RELEASE'
     compile files('lib/bb-stripes-utils-1.1.0.jar')
     compile files('lib/b2-config-utils-1.0.3.jar')
 
