@@ -144,15 +144,15 @@ String askQuestion(String question, Object defaultValue) {
         if (result.isEmpty()) {
             return defaultValue;
         }
+        return result
     }
     return System.console().readLine(question + ' ').trim()
 }
 
 String askStrictQuestion(String question, Object defaultValue) {
-    String answer = askQuestion(question, defaultValue)
-    while (answer.contains(' ')) {
-        System.console().printf('Spaces are not allowed for this question.')
-        answer = askQuestion(question, defaultValue)
+    String answer = askQuestion(question + ' (No spaces) ', defaultValue)
+    while (answer.contains(' ') || answer.isEmpty()) {
+        answer = askQuestion(question + ' (No spaces) ', defaultValue)
     }
     return answer
 }
