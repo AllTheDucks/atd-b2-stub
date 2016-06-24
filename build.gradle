@@ -66,7 +66,7 @@ task initB2 << {
         println('Saving these answers as default for next time')
         Properties properties = new Properties();
         properties.putAll(root)
-        OutputStream out = new FileOutputStream(new File(System.getProperty('user.home')  + sep +  '/.atd-b2-stub-defaults.properties'))
+        OutputStream out = new FileOutputStream(new File(System.getProperty('user.home')  + sep +  '.atd-b2-stub-defaults.properties'))
         properties.store(out, 'Default values when creating blackboard building blocks')
     }
 
