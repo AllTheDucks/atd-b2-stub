@@ -4,6 +4,7 @@ import freemarker.template.TemplateExceptionHandler
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.Map.Entry
+import java.util.regex.Pattern
 
 /**
  * The initial build.gradle file
@@ -181,7 +182,7 @@ void processFreemarkerFile(freemarker.template.Configuration cfg, Map<String, Ob
 
     File outputFile = new File(outputFilepath)
     if (!outputFile.exists()) {
-        def path = outputFile.absolutePath.split(File.separator)
+        def path = outputFile.absolutePath.split(Pattern.quote(File.separator))
         path = path[0..path.size()-2]
         path = path.join(File.separator)
         new File(path).mkdirs()
