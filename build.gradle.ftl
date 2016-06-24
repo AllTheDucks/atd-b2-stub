@@ -63,12 +63,12 @@ task deployb2(dependsOn: 'war') << {
 
 
 String getB2Version() {
-    File mfFile = new File(file(webAppDir), 'WEB-INF/bb-manifest.xml');
+    File mfFile = new File(file(webAppDir), 'WEB-INF' + File.separator + 'bb-manifest.xml');
     def manifest = new XmlSlurper().parse(mfFile);
     return manifest.plugin.version['@value'];
 }
 
 boolean isBuildingBlock() {
-    File mfFile = new File(file(webAppDir), 'WEB-INF/bb-manifest.xml');
+    File mfFile = new File(file(webAppDir), 'WEB-INF' + File.separator + 'bb-manifest.xml');
     return mfFile.exists();
 }
