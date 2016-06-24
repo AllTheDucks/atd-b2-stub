@@ -83,8 +83,10 @@ task initB2 << {
     def packagePath = root.get('basePackage').toString().replace(".", File.separator)
     def workingPath = new File('.').absolutePath
 
+    def sep = File.separator
+
     // we want files that fall under these patterns to be ignored
-    def ignoreFiles = ['.git', '.idea', 'build/', 'classes/', 'gradlew', 'gradle/', 'lib/', '.gradle', '.iml', '.md']
+    def ignoreFiles = ['.git', '.idea', 'build' + sep, 'classes' + sep, 'gradlew', 'gradle' + sep, 'lib' + sep, '.gradle' + sep, '.iml', '.md']
 
     new File('.').eachFileRecurse { file ->
 
@@ -100,7 +102,7 @@ task initB2 << {
 
         // process the file!
         if (!file.name.startsWith('.') && file.isFile()) {
-            processFreemarkerFile(cfg, root, filePath, filePath.replace('edu/myinst', packagePath))
+            processFreemarkerFile(cfg, root, filePath, filePath.replace('edu' + sep + 'myinst', packagePath))
         }
 
     }
