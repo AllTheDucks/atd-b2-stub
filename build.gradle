@@ -28,8 +28,9 @@ task initB2 << {
         return
     }
 
+    // Load defaults for the questions, if they exist
+    // The default answers are stored in the users home directory under a file named `.atd-b2-stub-defaults.properties`
     def Map<String, Object> defaults = new HashMap<>()
-    def Map<String, Object> root = new HashMap<>()
 
     def defaultsFile = Paths.get(System.getProperty('user.home') + '/.atd-b2-stub-defaults.properties')
     if (Files.exists(defaultsFile)) {
@@ -40,10 +41,16 @@ task initB2 << {
         }
     }
 
+    // Notify the user that default values can be used
     if (!defaults.isEmpty()) {
         println('Defaults found for generating building block')
     }
 
+
+    // Build a configuration object to store the Freemarker template and substitution values
+    def Map<String, Object> root = new HashMap<>()
+
+    // Ask the real questions
     root.put('username', System.getProperty('user.name'))
     root.put('vendorId', askStrictQuestion('\nWhat is your Vendor Id (e.g. usq, unsw, qut, swin, etc)?', defaults.get('vendorId')))
     root.put('vendorName', askQuestion('What is your Vendor Name (e.g. University of Antarctica)?', defaults.get('vendorName')))
@@ -62,9 +69,10 @@ task initB2 << {
 
     root.put('useCourseEventListener', askYNQuestion('Do you want to use the course event listener?'))
     root.put('useSchema', askYNQuestion('Do you want to use the Schema.xml?'))
+    // This might be needed in the future
 //    def useSpringDi = System.console().readLine 'Do you want to use Rendering Hooks (Y, N)?'
 
-
+    // Also generate some more necessary templates
     root.put('b2DbHandle', root.get('b2Handle').toString().replaceAll("-", "_"))
     root.put('fullB2NameDb', root.get('vendorId') + '_' + root.get('b2DbHandle'))
 
@@ -72,72 +80,65 @@ task initB2 << {
 
     def freemarker.template.Configuration cfg = initFreemarker();
 
-    processFreemarkerFile(cfg, root, "settings.gradle")
-
-    processFreemarkerFile(cfg, root, "./src/main/webapp/WEB-INF/bb-manifest.xml")
-    processFreemarkerFile(cfg, root, "./src/main/webapp/WEB-INF/bundles/bb-manifest-en_GB.properties")
-    processFreemarkerFile(cfg, root, "./src/main/webapp/WEB-INF/applicationContext.xml")
-    processFreemarkerFile(cfg, root, "./src/main/webapp/WEB-INF/web.xml")
-
-    processFreemarkerFile(cfg, root, "./src/main/java/edu/myinst/stripes/ConfigAction.java")
-    processFreemarkerFile(cfg, root, "./src/main/java/edu/myinst/stripes/ToolAction.java")
-    processFreemarkerFile(cfg, root, "./src/main/java/edu/myinst/dao/ExampleDao.java")
-    processFreemarkerFile(cfg, root, "./src/main/java/edu/myinst/config/Configuration.java")
-    processFreemarkerFile(cfg, root, "./src/main/java/edu/myinst/extensions/CourseEventHandler.java")
-    processFreemarkerFile(cfg, root, "./src/main/java/edu/myinst/model/Example.java")
-
-    processFreemarkerFile(cfg, root, "./src/main/webapp/WEB-INF/jsp/config.jsp")
-    processFreemarkerFile(cfg, root, "./src/main/webapp/WEB-INF/jsp/tool.jsp")
-
-    processFreemarkerFile(cfg, root, "./src/main/webapp/WEB-INF/schema/instance/schema.xml")
-    processFreemarkerFile(cfg, root, "./src/main/webapp/WEB-INF/schema/instance/stored_procedures.db-mssql/myu_stub_example_proc.sql")
-    processFreemarkerFile(cfg, root, "./src/main/webapp/WEB-INF/schema/instance/stored_procedures.db-oracle/myu_stub_example_proc.sql")
-    processFreemarkerFile(cfg, root, "./src/main/webapp/WEB-INF/schema/instance/stored_procedures.db-pgsql/myu_stub_example_proc.sql")
-
-    processFreemarkerFile(cfg, root, "./build.gradle.ftl")
-
-    searchAndReplaceFilename("src/main/webapp/WEB-INF/schema/instance/stored_procedures.db-mssql/myu_stub_example_proc.sql", "myu_stub", root.get('fullB2NameDb').toString())
-    searchAndReplaceFilename("src/main/webapp/WEB-INF/schema/instance/stored_procedures.db-oracle/myu_stub_example_proc.sql", "myu_stub", root.get('fullB2NameDb').toString())
-    searchAndReplaceFilename("src/main/webapp/WEB-INF/schema/instance/stored_procedures.db-pgsql/myu_stub_example_proc.sql", "myu_stub", root.get('fullB2NameDb').toString())
-
-    // Fix packages in java files
     def packagePath = root.get('basePackage').toString().replace(".", File.separator)
-    def destPackageDir = new File("src/main/java", packagePath)
-    def srcPackageDir = new File("src/main/java/edu/myinst")
-    destPackageDir.mkdirs();
+    def workingPath = new File('.').absolutePath
 
-    for (srcDir in srcPackageDir.listFiles()) {
-        if (srcDir.isDirectory()) {
-            def destDir = new File(destPackageDir, srcDir.getName())
-            destDir.mkdir()
-            for (srcFile in srcDir.listFiles()) {
-                new File(destDir, srcFile.getName()).withWriter { w ->
-                    srcFile.eachLine { line ->
-                        w << line.replaceAll( "edu.myinst", root.get('basePackage').toString())
-                        w << "\n"
-                    }
-                }
+    // we want files that fall under these patterns to be ignored
+    def ignoreFiles = ['.git', '.idea', 'build/', 'classes/', 'gradlew', 'gradle/', 'lib/', '.gradle', '.iml', '.md']
+
+    new File('.').eachFileRecurse { file ->
+
+        // create a nicer path that Freemarker can understand
+        def filePath = '.' + file.absolutePath.replace(workingPath, '')
+
+        // check to see if the current file should be ignored
+        for (String ignored : ignoreFiles) {
+            if (filePath.contains(ignored)) {
+                return
             }
         }
+
+        // process the file!
+        if (!file.name.startsWith('.') && file.isFile()) {
+            processFreemarkerFile(cfg, root, filePath, filePath.replace('edu/myinst', packagePath))
+        }
+
     }
 
+    // get rid of the old template dir
     new File("src/main/java/edu").deleteDir();
 
+    // get rid of this file
     Files.delete(Paths.get('build.gradle'))
+
+    // make the template build.gradle the real one
     Files.move(Paths.get('build.gradle.ftl'), Paths.get('build.gradle'))
 
+    // make sure nobody pushes back upstream to the stub
     def command = """git remote rm origin"""
     def proc = command.execute()
     proc.waitFor()
 
-    println "${proc.err.text}"
-    println "${proc.in.text}"
+    println proc.err.text
+    println proc.in.text
 }
 
+/**
+ * Ask a yes/no question, returning a true/false value respectively. Anything other than 'Y' or 'y' returns false.
+ * @param question
+ * @return result from the question
+ */
 boolean askYNQuestion(String question) {
     return System.console().readLine(question + ' (Y/N) ').trim().toLowerCase() == 'y'
 }
 
+/**
+ * Ask a question returning an answer. If a default value is provided (not null), the user does not have to provide an
+ * answer and may just press enter.
+ * @param question
+ * @param defaultValue
+ * @return A string containing the answer to the question
+ */
 String askQuestion(String question, Object defaultValue) {
     if (defaultValue != null) {
         String result =  System.console().readLine(question + ' ' + '[' + defaultValue + '] ').trim()
@@ -149,47 +150,61 @@ String askQuestion(String question, Object defaultValue) {
     return System.console().readLine(question + ' ').trim()
 }
 
+/**
+ * An answer to strict question may not contain spaces or be empty
+ * @see #askQuestion
+ * @param question
+ * @param defaultValue
+ * @return A string containing the answer to the question
+ */
 String askStrictQuestion(String question, Object defaultValue) {
-    String answer = askQuestion(question + ' (No spaces) ', defaultValue)
+    question = question + ' (No spaces) '
+    String answer = askQuestion(question, defaultValue)
     while (answer.contains(' ') || answer.isEmpty()) {
-        answer = askQuestion(question + ' (No spaces) ', defaultValue)
+        answer = askQuestion(question, defaultValue)
     }
     return answer
 }
 
+/**
+ *
+ * @param cfg A Freemaker configuration object
+ * @param root A map containing Freemarker template strings -> substitution values
+ * @param inputFilepath
+ * @param outputFilepath
+ */
+void processFreemarkerFile(freemarker.template.Configuration cfg, Map<String, Object> root, String inputFilepath, String outputFilepath) {
 
-def processFreemarkerFile(freemarker.template.Configuration cfg, Map<String, Object> root, String filepath) {
+    Template template = cfg.getTemplate(inputFilepath)
 
-    Template template = cfg.getTemplate(filepath)
-    FileWriter out = new FileWriter(new File(filepath))
+    File outputFile = new File(outputFilepath)
+    if (!outputFile.exists()) {
+        def path = outputFile.absolutePath.split('/')
+        path = path[0..path.size()-2]
+        path = path.join('/')
+        new File(path).mkdirs()
+    }
+
+    FileWriter out = new FileWriter(new File(outputFilepath))
     template.process(root, out)
-    out.close()
+    out.close();
 
 }
 
+/**
+ * Init a configuration object for freemarker
+ * See {@linktourl http://freemarker.org/docs/pgui_quickstart_createconfiguration.html}
+ */
 def initFreemarker() {
 
-    /**
-     * Init a configuration object for freemarker
-     * http://freemarker.org/docs/pgui_quickstart_createconfiguration.html
-     */
     freemarker.template.Configuration cfg = new freemarker.template.Configuration(freemarker.template.Configuration.VERSION_2_3_23)
     cfg.setDirectoryForTemplateLoading(new File('.'))
     cfg.setDefaultEncoding('UTF-8')
     cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER)
 
-    // Don't log exceptions inside FreeMarker that it will thrown at you anyway
+    // Don't log exceptions inside FreeMarker that it will throw at you anyway
     cfg.setLogTemplateExceptions(false);
 
     return cfg;
 
-}
-
-def searchAndReplaceFilename(String targetFilePath, String search, String replace) {
-    def file = new File(targetFilePath)
-    def oldName = file.name
-    def newName = file.name.replaceAll(search, replace)
-    if(oldName != newName) {
-        file.renameTo(new File(file.parentFile, newName));
-    }
 }

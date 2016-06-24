@@ -4,7 +4,7 @@ import blackboard.platform.plugin.PlugInUtil;
 import com.alltheducks.bb.stripes.EntitlementRestrictions;
 import com.alltheducks.bb.stripes.LoginRequired;
 import com.alltheducks.configutils.service.ConfigurationService;
-import edu.myinst.config.Configuration;
+import ${basePackage}.config.Configuration;
 import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.integration.spring.SpringBean;
