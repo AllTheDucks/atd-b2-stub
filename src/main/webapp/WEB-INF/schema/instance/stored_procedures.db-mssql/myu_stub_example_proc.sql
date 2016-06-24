@@ -1,4 +1,4 @@
--- CREATE PROCEDURE myu_stub_example_proc
+-- CREATE PROCEDURE ${fullB2NameDb}_example_proc
 -- (
 --   @aparam VARCHAR
 -- )

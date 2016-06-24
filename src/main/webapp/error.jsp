@@ -7,10 +7,10 @@
 <%@ taglib prefix="bbng" uri="/bbNG" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<fmt:message var="errorPageTitle" key="myapp.errorPage.title" />
-<fmt:message var="errorPageMessage" key="myapp.errorPage.message" />
+<fmt:message var="errorPageTitle" key="${b2Handle}.errorPage.title" />
+<fmt:message var="errorPageMessage" key="${b2Handle}.errorPage.message" />
 
 
-<bbNG:learningSystemPage ctxId="ctx" title="${errorPageTitle}">
-    <h2>${errorPageMessage}</h2>
+<bbNG:learningSystemPage ctxId="ctx" title="${r"${errorPageTitle}"}">
+    <h2>${r"${errorPageMessage}"}</h2>
 </bbNG:learningSystemPage>

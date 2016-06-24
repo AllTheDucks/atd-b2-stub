@@ -7,12 +7,12 @@
 <%@ taglib prefix="bbng" uri="/bbNG" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<fmt:message var="toolSettingsStepTitle" key="myapp.configPage.toolSettingsStep.title" />
-<fmt:message var="settingOneLabel" key="myapp.configPage.settingOne.label" />
-<fmt:message var="settingTwoLabel" key="myapp.configPage.settingTwo.label" />
+<fmt:message var="toolSettingsStepTitle" key="${b2Handle}.configPage.toolSettingsStep.title" />
+<fmt:message var="settingOneLabel" key="${b2Handle}.configPage.settingOne.label" />
+<fmt:message var="settingTwoLabel" key="${b2Handle}.configPage.settingTwo.label" />
 
 <bbNG:genericPage bodyClass="normalBackground"
-                  navItem="myu-myapp-nav-helloworldconfig">
+                  navItem="${vendorId}-${b2Handle}-nav-${b2Handle}config">
 
     <style type="text/css">
         span.fieldErrorText {
@@ -20,16 +20,16 @@
             color: red;
         }
     </style>
-    <stripes:form beanclass="edu.myinst.stripes.ConfigAction">
+    <stripes:form beanclass="${basePackage}.stripes.ConfigAction">
         <stripes:hidden name="saveConfiguration"/>
 
         <bbNG:dataCollection>
-            <bbNG:step title="${toolSettingsStepTitle}">
-                <bbNG:dataElement isRequired="true" label="${settingOneLabel}">
+            <bbNG:step title="${r"${toolSettingsStepTitle}"}">
+                <bbNG:dataElement isRequired="true" label="${r"${settingOneLabel}"}">
                     <stripes:text name="config.settingOne"></stripes:text>
                     <stripes:errors field="config.settingOne"></stripes:errors>
                 </bbNG:dataElement>
-                <bbNG:dataElement isRequired="true" label="${settingTwoLabel}">
+                <bbNG:dataElement isRequired="true" label="${r"${settingTwoLabel}"}">
                     <stripes:text name="config.settingTwo"></stripes:text>
                     <stripes:errors field="config.settingTwo"></stripes:errors>
                 </bbNG:dataElement>

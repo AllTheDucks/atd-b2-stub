@@ -1,10 +1,10 @@
-package edu.myinst.stripes;
+package ${basePackage}.stripes;
 
 import blackboard.platform.plugin.PlugInUtil;
 import com.alltheducks.bb.stripes.EntitlementRestrictions;
 import com.alltheducks.bb.stripes.LoginRequired;
 import com.alltheducks.configutils.service.ConfigurationService;
-import edu.myinst.config.Configuration;
+import ${basePackage}.config.Configuration;
 import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.integration.spring.SpringBean;
@@ -12,7 +12,7 @@ import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
 
 @LoginRequired
-@EntitlementRestrictions(entitlements = "myu.stub.admin.MODIFY", errorPage = "/error.jsp")
+@EntitlementRestrictions(entitlements = "${vendorId}.${b2Handle}.admin.MODIFY", errorPage = "/error.jsp")
 public class ConfigAction implements ActionBean {
 
     private ActionBeanContext context;

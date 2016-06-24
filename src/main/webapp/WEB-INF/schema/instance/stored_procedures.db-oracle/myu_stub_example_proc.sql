@@ -1,4 +1,4 @@
--- CREATE OR REPLACE PROCEDURE myu_stub_example_proc(
+-- CREATE OR REPLACE PROCEDURE ${fullB2NameDb}_example_proc(
 --  aparam VARCHAR
 -- )
 -- IS

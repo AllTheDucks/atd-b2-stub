@@ -1,4 +1,4 @@
-package edu.myinst.config;
+package ${basePackage}.config;
 
 import net.sourceforge.stripes.validation.Validate;
 
