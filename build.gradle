@@ -28,11 +28,13 @@ task initB2 << {
         return
     }
 
+    def sep = File.separator
+
     // Load defaults for the questions, if they exist
     // The default answers are stored in the users home directory under a file named `.atd-b2-stub-defaults.properties`
     def Map<String, Object> defaults = new HashMap<>()
 
-    def defaultsFile = Paths.get(System.getProperty('user.home') + '/.atd-b2-stub-defaults.properties')
+    def defaultsFile = Paths.get(System.getProperty('user.home') + sep + '.atd-b2-stub-defaults.properties')
     if (Files.exists(defaultsFile)) {
         Properties defaultProperties = new Properties();
         defaultProperties.load(new ByteArrayInputStream(Files.readAllBytes(defaultsFile)))
@@ -63,7 +65,7 @@ task initB2 << {
         println('Saving these answers as default for next time')
         Properties properties = new Properties();
         properties.putAll(root)
-        OutputStream out = new FileOutputStream(new File(System.getProperty('user.home') + '/.atd-b2-stub-defaults.properties'))
+        OutputStream out = new FileOutputStream(new File(System.getProperty('user.home')  + sep +  '/.atd-b2-stub-defaults.properties'))
         properties.store(out, 'Default values when creating blackboard building blocks')
     }
 
@@ -82,8 +84,6 @@ task initB2 << {
 
     def packagePath = root.get('basePackage').toString().replace(".", File.separator)
     def workingPath = new File('.').absolutePath
-
-    def sep = File.separator
 
     // we want files that fall under these patterns to be ignored
     def ignoreFiles = ['.git', '.idea', 'build' + sep, 'classes' + sep, 'gradlew', 'gradle' + sep, 'lib' + sep, '.gradle' + sep, '.iml', '.md']
@@ -108,7 +108,7 @@ task initB2 << {
     }
 
     // get rid of the old template dir
-    new File("src/main/java/edu").deleteDir();
+    new File("src/main/java/edu".split('/').join(sep)).deleteDir();
 
     // get rid of this file
     Files.delete(Paths.get('build.gradle'))
@@ -181,9 +181,9 @@ void processFreemarkerFile(freemarker.template.Configuration cfg, Map<String, Ob
 
     File outputFile = new File(outputFilepath)
     if (!outputFile.exists()) {
-        def path = outputFile.absolutePath.split('/')
+        def path = outputFile.absolutePath.split(File.separator)
         path = path[0..path.size()-2]
-        path = path.join('/')
+        path = path.join(File.separator)
         new File(path).mkdirs()
     }
 
