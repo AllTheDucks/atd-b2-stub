@@ -72,6 +72,8 @@ task initB2 << {
 
     root.put('useCourseEventListener', askYNQuestion('Do you want to use the course event listener?'))
     root.put('useSchema', askYNQuestion('Do you want to use the Schema.xml?'))
+    root.put('useSystemTool', askYNQuestion('Do you want a system tool?'))
+    root.put('useCourseTool', askYNQuestion('Do you want a course tool?'))
     // This might be needed in the future
 //    def useSpringDi = System.console().readLine 'Do you want to use Rendering Hooks (Y, N)?'
 
@@ -85,6 +87,14 @@ task initB2 << {
 
     def packagePath = root.get('basePackage').toString().replace(".", File.separator)
     def workingPath = new File('.').absolutePath
+
+    if (!root.get('useSystemTool')) {
+        Files.delete(Paths.get('src/main/java/edu/myinst/stripes/SystemToolAction.java'))
+    }
+
+    if (!root.get('useCourseTool')) {
+        Files.delete(Paths.get('src/main/java/edu/myinst/stripes/CourseToolAction.java'))
+    }
 
     // we want files that fall under these patterns to be ignored
     def ignoreFiles = ['.git', '.idea', 'build' + sep, 'classes' + sep, 'gradlew', 'gradle' + sep, 'lib' + sep, '.gradle' + sep, '.iml', '.md']
