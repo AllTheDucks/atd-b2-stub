@@ -13,13 +13,14 @@
 
 <bbNG:genericPage bodyClass="normalBackground"
                   navItem="${vendorId}-${b2Handle}-nav-${b2Handle}config">
-
+    <bbNG:cssBlock>
     <style type="text/css">
         span.fieldErrorText {
             margin-left: 1em;
             color: red;
         }
     </style>
+    </bbNG:cssBlock>
     <stripes:form beanclass="${basePackage}.stripes.ConfigAction">
         <stripes:hidden name="saveConfiguration"/>
 
