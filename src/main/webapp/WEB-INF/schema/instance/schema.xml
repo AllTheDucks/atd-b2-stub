@@ -62,16 +62,20 @@
     - views
     -->
 
+    <!--
     <stored-procedures>
         <stored-procedure name="${fullB2NameDb}_example_proc.sql" comment="Example procedure, in SQL Server dialect." availability="SqlServer" />
         <stored-procedure name="${fullB2NameDb}_example_proc.sql" comment="Example procedure, in Oracle dialect." availability="Oracle" />
         <stored-procedure name="${fullB2NameDb}_example_proc.sql" comment="Example procedure, in PostgreSQL dialect." availability="PostgreSQL" />
     </stored-procedures>
+    -->
 
+    <!--
     <post-update>
         <sql-script name="example.sql" comment="Example post update script, in SQL Server dialect." availability="SqlServer" />
         <sql-script name="example.sql" comment="Example post update script, in Oracle dialect." availability="Oracle" />
         <sql-script name="example.sql" comment="Example post update script, in PostgreSQL dialect." availability="PostgreSQL" />
     </post-update>
+    -->
 
 </schema>
