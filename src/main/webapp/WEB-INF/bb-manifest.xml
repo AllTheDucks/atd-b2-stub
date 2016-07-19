@@ -33,14 +33,26 @@
             <application handle="${b2Handle}" type="shared" name="plugin.tool.title">
                 <description>plugin.tool.description</description>
                 <links>
+                    <#if useSystemTool>
+                    <link>
+                        <type value="system_tool"/>
+                        <name value="plugin.link.${b2Handle}.admin.name"/>
+                        <url value="SystemTool.action"/>
+                        <handle value="${b2Handle}-system"/>
+                        <description
+                                value="plugin.link.${b2Handle}.admin.description"/>
+                    </link>
+                    </#if>
+                    <#if useCourseTool>
                     <link>
                         <type value="course_tool"/>
-                        <name value="plugin.link.${b2Handle}.name"/>
-                        <url value="Tool.action"/>
-                        <handle value="${b2Handle}"/>
+                        <name value="plugin.link.${b2Handle}.course.name"/>
+                        <url value="CourseTool.action"/>
+                        <handle value="${b2Handle}-course"/>
                         <description
-                                value="plugin.link.${b2Handle}.description"/>
+                                value="plugin.link.${b2Handle}.course.description"/>
                     </link>
+                    </#if>
                     <link>
                         <type value="nav_handle_param"/>
                         <name value="plugin.link.${b2Handle}config.name"/>
@@ -86,6 +98,12 @@
                          label="${vendorId}.${b2Handle}.entitlement.system"
                          type="System"
                          template="system.plugin.MODIFY"/>
+            <#if useCourseTool>
+            <entitlement uid="${vendorId}.${b2Handle}.course.VIEW"
+                         label="${vendorId}.${b2Handle}.entitlement.course"
+                         type="Course"
+                         template="course.control_panel.VIEW"/>
+            </#if>
         </entitlements>
 
         <permissions>
