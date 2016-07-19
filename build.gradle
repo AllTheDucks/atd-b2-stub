@@ -21,6 +21,13 @@ buildscript {
     }
 }
 
+task gitInit(type:Exec) {
+    workingDir '.'
+    commandLine 'git', 'init'
+    // if the user does not have git installed, do not crash and burn
+    ignoreExitValue true
+}
+
 task initB2 << {
 
     def console = System.console()
@@ -118,12 +125,10 @@ task initB2 << {
     Files.move(Paths.get('build.gradle.ftl'), Paths.get('build.gradle'))
 
     // make sure nobody pushes back upstream to the stub
-    def command = """git remote rm origin"""
-    def proc = command.execute()
-    proc.waitFor()
-
-    println proc.err.text
-    println proc.in.text
+    if (Files.exists(Paths.get('.git'))) {
+        delete '.git'
+        tasks.gitInit.execute()
+    }
 }
 
 /**
