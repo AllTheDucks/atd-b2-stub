@@ -88,6 +88,10 @@ task initB2 << {
 
     println "Initialising Building Block $root.vendorId-$root.b2Handle"
 
+    if (!root.get("useSchema")) {
+        delete "src/main/webapp/WEB-INF/schema"
+    }
+
     def freemarker.template.Configuration cfg = initFreemarker();
 
     def packagePath = root.get('basePackage').toString().replace(".", File.separator)
