@@ -35,4 +35,9 @@
         <constructor-arg name="configurationService" ref="configurationService"/>
         <constructor-arg name="pollFreqSeconds" value="10"/>
     </bean>
+
+    <bean id="bundleService" class="com.alltheducks.bundleutils.BundleService">
+        <constructor-arg index="0" value="${vendorId}"/>
+        <constructor-arg index="1" value="${b2Handle}"/>
+    </bean>
 </beans>
