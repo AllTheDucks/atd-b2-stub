@@ -89,6 +89,17 @@
         <url-pattern>*.action</url-pattern>
     </servlet-mapping>
 
+    <!-- Uncomment below to enable the bundle service in javascript -->
+    <!-- Documentation: https://github.com/AllTheDucks/b2-bundle-utils#in-javascript -->
+    <!--<servlet>-->
+        <!--<servlet-name>JsBundleServlet</servlet-name>-->
+        <!--<servlet-class>com.alltheducks.bundleutils.JsBundleServlet</servlet-class>-->
+        <!--<load-on-startup>1</load-on-startup>-->
+    <!--</servlet>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>JsBundleServlet</servlet-name>-->
+        <!--<url-pattern>/bundle.js</url-pattern>-->
+    <!--</servlet-mapping>-->
 
     <context-param>
         <param-name>blackboard.plugin.vendor</param-name>

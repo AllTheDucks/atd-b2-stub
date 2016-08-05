@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="default" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>../../../logs/plugins/${vendorId}-${b2Handle}/${vendorId}-${b2Handle}.log</file>
+        <append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../../../logs/plugins/${vendorId}-${b2Handle}/${vendorId}-${b2Handle}.%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
         <encoder>
-            <pattern>%d %5p %c{1}:%L - %m%n</pattern>
+            <!-- This pattern ensures logging will work in Learn SaaS -->
+            <pattern>%date{yyyy-MM-dd HH:mm:ss} | %-5level | %-45(%L:%logger{40}) | %m%n%ex{10}</pattern>
         </encoder>
     </appender>
+    <logger name="${basePackage}" level="DEBUG"/>
     <root level="WARN">
-        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="default"/>
     </root>
-    <logger name="net.sourceforge.stripes" level="WARN"/>
 </configuration>
