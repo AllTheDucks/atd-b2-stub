@@ -37,7 +37,7 @@ public class ConfigAction implements ActionBean {
     @DefaultHandler
     @DontValidate
     public Resolution displayConfigPage() {
-        return new ForwardResolution("/WEB-INF/jsp/config.jsp");
+        return new ForwardResolution("config.jsp");
     }
 
     public Resolution saveConfiguration() {
