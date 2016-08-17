@@ -40,6 +40,7 @@ dependencies {
     compile files('lib/bb-stripes-utils-1.1.0.jar')
     compile files('lib/b2-config-utils-1.0.3.jar')
     compile files('lib/b2-bundle-utils-1.1.0.jar')
+    compile files('lib/b2-logging-utils-1.0.0.jar')
 
     providedCompile 'javax.servlet:servlet-api:2.5'
     providedCompile 'jstl:jstl:1.2'

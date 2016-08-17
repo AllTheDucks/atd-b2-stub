@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+
+    <define name="pluginLogDir" class="com.alltheducks.logging.logback.BbPluginLogDirPropertyDefiner">
+        <vendorId>${vendorId}</vendorId>
+        <handle>${b2Handle}</handle>
+    </define>
+
     <appender name="default" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>../../../logs/plugins/${vendorId}-${b2Handle}/${vendorId}-${b2Handle}.log</file>
+        <file>${r"${pluginLogDir}"}/${vendorId}-${b2Handle}.log</file>
         <append>true</append>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>../../../logs/plugins/${vendorId}-${b2Handle}/${vendorId}-${b2Handle}.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${r"${pluginLogDir}"}/${vendorId}-${b2Handle}/${vendorId}-${b2Handle}.%d{yyyy-MM-dd}.log</fileNamePattern>
         </rollingPolicy>
         <encoder>
             <!-- This pattern ensures logging will work in Learn SaaS -->
