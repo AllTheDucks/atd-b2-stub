@@ -47,6 +47,7 @@ dependencies {
     providedCompile 'blackboard.platform:bb-platform:9.1.201404.160205'
     providedCompile 'blackboard.platform:bb-taglibs:9.1.201404.160205'
     providedCompile 'com.google.guava:guava:16.0'
+    providedCompile 'com.google.code.findbugs:annotations:3.0.1u2'
 
     /* the bb-cms-admin is needed for the CourseEventHandler Class, as referenced in bb-manifest.xml */
     providedCompile 'blackboard.platform:bb-cms-admin:9.1.201404.160205'
