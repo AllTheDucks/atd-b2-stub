@@ -27,10 +27,6 @@ public class ConfigAction implements ActionBean {
     @Before(stages = LifecycleStage.BindingAndValidation)
     public void loadConfiguration() {
         config = configService.loadConfiguration();
-        if (config == null) {
-            config = new Configuration();
-        }
-
     }
 
 

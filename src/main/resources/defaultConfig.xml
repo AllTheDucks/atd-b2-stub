@@ -1,0 +1,4 @@
+<${basePackage}.config.Configuration>
+  <settingOne>A default string value</settingOne>
+  <settingTwo>42</settingTwo>
+</${basePackage}.config.Configuration>

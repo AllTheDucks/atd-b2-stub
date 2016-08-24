@@ -38,7 +38,7 @@ dependencies {
     compile 'org.springframework:spring-beans:4.3.0.RELEASE'
     compile 'org.springframework:spring-web:4.3.0.RELEASE'
     compile files('lib/bb-stripes-utils-1.1.0.jar')
-    compile files('lib/b2-config-utils-1.0.3.jar')
+    compile files('lib/b2-config-utils-1.1.0.jar')
     compile files('lib/b2-bundle-utils-1.1.0.jar')
     compile files('lib/b2-logging-utils-1.0.0.jar')
 

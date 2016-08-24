@@ -25,7 +25,11 @@
     <bean id="configurationService" class="com.alltheducks.configutils.service.CachingConfigurationService">
         <constructor-arg name="internalConfigurationService">
             <bean class="com.alltheducks.configutils.service.XmlConfigurationService">
+                <constructor-arg name="configClass">
+                  <value type="java.lang.Class">${basePackage}.config.Configuration</value>
+                </constructor-arg>
                 <constructor-arg name="configurationXmlFile" ref="configFile" />
+                <constructor-arg name="defaultConfigFileClasspathLocation" value="/defaultConfig.xml" />
             </bean>
         </constructor-arg>
     </bean>
