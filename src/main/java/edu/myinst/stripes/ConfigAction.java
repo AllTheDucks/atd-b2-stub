@@ -1,6 +1,7 @@
 package ${basePackage}.stripes;
 
 import blackboard.platform.plugin.PlugInUtil;
+import com.alltheducks.bb.stripes.BlackboardActionBeanContext;
 import com.alltheducks.bb.stripes.EntitlementRestrictions;
 import com.alltheducks.bb.stripes.LoginRequired;
 import com.alltheducks.configutils.service.ConfigurationService;
@@ -15,7 +16,7 @@ import net.sourceforge.stripes.validation.ValidateNestedProperties;
 @EntitlementRestrictions(entitlements = "${vendorId}.${b2Handle}.admin.MODIFY", errorPage = "/error.jsp")
 public class ConfigAction implements ActionBean {
 
-    private ActionBeanContext context;
+    private BlackboardActionBeanContext context;
 
     @ValidateNestedProperties({@Validate(field = "settingOne", required = true),
             @Validate(field = "settingTwo", required = true, minvalue = 0, maxvalue = 100)})
@@ -41,12 +42,14 @@ public class ConfigAction implements ActionBean {
         return new RedirectResolution(PlugInUtil.getPlugInManagerURL(), false);
     }
 
+    @Override
     public ActionBeanContext getContext() {
         return context;
     }
 
+    @Override
     public void setContext(ActionBeanContext context) {
-        this.context = context;
+        this.context = (BlackboardActionBeanContext)context;
     }
 
     public Configuration getConfig() {
