@@ -92,6 +92,12 @@ task initB2 << {
 
     if (!root.get("useSchema")) {
         delete "src/main/webapp/WEB-INF/schema"
+        delete "src/main/java/edu/myinst/dao"
+        delete "src/main/java/edu/myinst/model"
+    }
+
+    if(!root.get("useCourseEventListener")){
+        delete "src/main/java/edu/myinst/extensions"
     }
 
     def freemarker.template.Configuration cfg = initFreemarker();
@@ -101,10 +107,12 @@ task initB2 << {
 
     if (!root.get('useSystemTool')) {
         Files.delete(Paths.get('src/main/java/edu/myinst/stripes/SystemToolAction.java'))
+        Files.delete(Paths.get('src/main/webapp/WEB-INF/jsp/system-tool.jsp'))
     }
 
     if (!root.get('useCourseTool')) {
         Files.delete(Paths.get('src/main/java/edu/myinst/stripes/CourseToolAction.java'))
+        Files.delete(Paths.get('src/main/webapp/WEB-INF/jsp/course-tool.jsp'))
     }
 
     // we want files that fall under these patterns to be ignored
