@@ -6,6 +6,7 @@
 <%@ taglib prefix="stripes" uri="http://stripes.sourceforge.net/stripes.tld"%>
 
 <fmt:message var="toolSettingsStepTitle" key="${b2Handle}.configPage.toolSettingsStep.title" />
+<fmt:message var="toolSettingsStepInstructions" key="${b2Handle}.configPage.toolSettingsStep.instructions" />
 <fmt:message var="settingOneLabel" key="${b2Handle}.configPage.settingOne.label" />
 <fmt:message var="settingTwoLabel" key="${b2Handle}.configPage.settingTwo.label" />
 
@@ -23,7 +24,7 @@
         <stripes:hidden name="saveConfiguration"/>
 
         <bbNG:dataCollection>
-            <bbNG:step title="${r"${toolSettingsStepTitle}"}">
+            <bbNG:step title="${r"${toolSettingsStepTitle}"}" instructions="${r"${toolSettingsStepInstructions}"}">
                 <bbNG:dataElement isRequired="true" label="${r"${settingOneLabel}"}">
                     <stripes:text name="config.settingOne"></stripes:text>
                     <stripes:errors field="config.settingOne"></stripes:errors>
