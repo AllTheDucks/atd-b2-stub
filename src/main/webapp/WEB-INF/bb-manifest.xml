@@ -24,7 +24,7 @@
             <description value="${vendorName}"/>
         </vendor>
         <http-actions>
-            <config value="Config.action"/>
+            <config value="config"/>
         </http-actions>
 
 
@@ -37,7 +37,7 @@
                     <link>
                         <type value="system_tool"/>
                         <name value="plugin.link.${b2Handle}.admin.name"/>
-                        <url value="SystemTool.action"/>
+                        <url value="systemtool"/>
                         <handle value="${b2Handle}-system"/>
                         <description
                                 value="plugin.link.${b2Handle}.admin.description"/>
@@ -47,7 +47,7 @@
                     <link>
                         <type value="course_tool"/>
                         <name value="plugin.link.${b2Handle}.course.name"/>
-                        <url value="CourseTool.action"/>
+                        <url value="coursetool"/>
                         <handle value="${b2Handle}-course"/>
                         <description
                                 value="plugin.link.${b2Handle}.course.description"/>
@@ -56,7 +56,7 @@
                     <link>
                         <type value="nav_handle_param"/>
                         <name value="plugin.link.${b2Handle}config.name"/>
-                        <url value="Config.action"/>
+                        <url value="config"/>
                         <navhandle value="admin_plugin_manage"/>
                         <handle value="${b2Handle}config"/>
                         <description

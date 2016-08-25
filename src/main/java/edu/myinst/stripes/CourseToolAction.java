@@ -8,6 +8,7 @@ import net.sourceforge.stripes.integration.spring.SpringBean;
 
 @LoginRequired
 @EntitlementRestrictions(entitlements = "${vendorId}.${b2Handle}.course.VIEW", errorPage = "/error.jsp")
+@UrlBinding("/coursetool")
 public class CourseToolAction implements ActionBean {
 
     private BlackboardActionBeanContext context;

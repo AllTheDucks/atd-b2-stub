@@ -14,6 +14,7 @@ import net.sourceforge.stripes.validation.ValidateNestedProperties;
 
 @LoginRequired
 @EntitlementRestrictions(entitlements = "${vendorId}.${b2Handle}.admin.MODIFY", errorPage = "/error.jsp")
+@UrlBinding("/config")
 public class ConfigAction implements ActionBean {
 
     private BlackboardActionBeanContext context;

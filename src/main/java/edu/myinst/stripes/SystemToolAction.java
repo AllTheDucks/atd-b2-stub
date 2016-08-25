@@ -8,6 +8,7 @@ import net.sourceforge.stripes.integration.spring.SpringBean;
 
 @LoginRequired
 @EntitlementRestrictions(entitlements = "${vendorId}.${b2Handle}.admin.MODIFY", errorPage = "/error.jsp")
+@UrlBinding("/systemtool")
 public class SystemToolAction implements ActionBean {
 
     private BlackboardActionBeanContext context;

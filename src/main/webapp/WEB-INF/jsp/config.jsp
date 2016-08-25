@@ -7,8 +7,8 @@
 
 <fmt:message var="toolSettingsStepTitle" key="${b2Handle}.configPage.toolSettingsStep.title" />
 <fmt:message var="toolSettingsStepInstructions" key="${b2Handle}.configPage.toolSettingsStep.instructions" />
-<fmt:message var="settingOneLabel" key="${basePackage}.ConfigAction.config.settingOne" />
-<fmt:message var="settingTwoLabel" key="${basePackage}.ConfigAction.config.settingOne" />
+<fmt:message var="settingOneLabel" key="${basePackage}.stripes.ConfigAction.config.settingOne" />
+<fmt:message var="settingTwoLabel" key="${basePackage}.stripes.ConfigAction.config.settingOne" />
 
 <bbNG:genericPage bodyClass="normalBackground"
                   navItem="${vendorId}-${b2Handle}-nav-${b2Handle}config">
@@ -21,7 +21,7 @@
     </style>
     </bbNG:cssBlock>
     <stripes:form beanclass="${basePackage}.stripes.ConfigAction">
-        <stripes:hidden name="saveConfiguration"/>
+        <stripes:param name="saveConfiguration"/>
 
         <bbNG:dataCollection>
             <bbNG:step title="${r"${toolSettingsStepTitle}"}" instructions="${r"${toolSettingsStepInstructions}"}">

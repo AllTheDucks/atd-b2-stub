@@ -84,10 +84,26 @@
         <!--<servlet-name>JerseyEndpoint</servlet-name>-->
         <!--<url-pattern>/ws/*</url-pattern>-->
     <!--</servlet-mapping>-->
-    <servlet-mapping>
+    <!--<servlet-mapping>
         <servlet-name>StripesDispatcher</servlet-name>
         <url-pattern>*.action</url-pattern>
+    </servlet-mapping> -->
+    <servlet-mapping>
+        <servlet-name>StripesDispatcher</servlet-name>
+        <url-pattern>/config</url-pattern>
     </servlet-mapping>
+    <#if useCourseTool>
+    <servlet-mapping>
+        <servlet-name>StripesDispatcher</servlet-name>
+        <url-pattern>/coursetool</url-pattern>
+    </servlet-mapping>
+    </#if>
+    <#if useSystemTool>
+    <servlet-mapping>
+        <servlet-name>StripesDispatcher</servlet-name>
+        <url-pattern>/systemtool</url-pattern>
+    </servlet-mapping>
+    </#if>
 
     <!-- Uncomment below to enable the bundle service in javascript -->
     <!-- Documentation: https://github.com/AllTheDucks/b2-bundle-utils#in-javascript -->
