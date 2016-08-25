@@ -7,8 +7,8 @@
 
 <fmt:message var="toolSettingsStepTitle" key="${b2Handle}.configPage.toolSettingsStep.title" />
 <fmt:message var="toolSettingsStepInstructions" key="${b2Handle}.configPage.toolSettingsStep.instructions" />
-<fmt:message var="settingOneLabel" key="${b2Handle}.configPage.settingOne.label" />
-<fmt:message var="settingTwoLabel" key="${b2Handle}.configPage.settingTwo.label" />
+<fmt:message var="settingOneLabel" key="${basePackage}.ConfigAction.config.settingOne" />
+<fmt:message var="settingTwoLabel" key="${basePackage}.ConfigAction.config.settingOne" />
 
 <bbNG:genericPage bodyClass="normalBackground"
                   navItem="${vendorId}-${b2Handle}-nav-${b2Handle}config">
