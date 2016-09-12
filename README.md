@@ -3,7 +3,7 @@
 This is a skeleton building block which can be used to bootstrap the creation of a Blackboard Building Block.
 
 A building block created using this stub will, by default, include:
- - [Spring Beans](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/beans.html) for dependancy injection
+ - [Spring Beans](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/beans.html) for dependency injection
  - [Stripes Framework](https://stripesframework.atlassian.net/wiki/display/STRIPES/Home) for MVC
  - [ATD's Configuration Utilities Library](https://github.com/AllTheDucks/b2-config-utils) with example configuration page
  - [ATD's Bundle Utilities Library](https://github.com/AllTheDucks/b2-bundle-utils)
@@ -67,7 +67,7 @@ public class MyActionBean implements ActionBean {
     @DefaultHandler
     public Resolution myAction() {
         // Do any work that needs to happen.
-        // Load stuff into properties on the bean, makind sure those properties
+        // Load stuff into properties on the bean, making sure those properties
         // have getters (and setters if you are accepting post backs).
         this.myString = "My happy string!"
         return new ForwardResolution("/WEB-INF/jsp/my.jsp");
@@ -107,10 +107,10 @@ Now render your page using JSP:
 
 The [Stripes Framework Documentation](https://stripesframework.atlassian.net/wiki/display/STRIPES/Home) provides more details.
 
-## Inject a bean using Spring DI ##
+## Inject a bean using Spring dependency injection ##
 The B2 stub uses [Spring Beans](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/beans.html) for dependency injection. 
 
-There are a number of different methods for building your dependancy graph. At [All the Ducks](https://www.alltheducks.com/) we prefer manually wire everything together using XML as it is more explicit and thus more obvious what is going on. This doesn't mean you cannot use annotations if you choose.
+There are a number of different methods for building your dependency graph. At [All the Ducks](https://www.alltheducks.com/) we prefer manually wire everything together using XML as it is more explicit and thus more obvious what is going on. This doesn't mean you cannot use annotations if you choose.
 
 To see how all the beans that are required for the project, open `src/main/webapp/WEB-INF/applicationContext.xml`. 
 
@@ -208,13 +208,13 @@ public void myMethod() {
 }
 ````
 
-The default configuation of building blocks created from this stub is to log to `blackboard/logs/plugins/atd-example/atd-example.log` with daily rolling, where `atd-example` is the vendor ID and handle of your building block.
+The default configuration of building blocks created from this stub is to log to `blackboard/logs/plugins/atd-example/atd-example.log` with daily rolling, where `atd-example` is the vendor ID and handle of your building block.
 
-## Get a language pack message in Java ##
+## Get a language pack message ##
 Obtaining a language pack message from the bundle varies depending on where you are trying to get it.
 
 ### JSP ###
-JSP has a built-in mechenism for obtaining language pack keys. Simply include the `fmt` tag library and get messages using the `fmt:message` tag:
+JSP has a built-in mechanism for obtaining language pack keys. Simply include the `fmt` tag library and get messages using the `fmt:message` tag:
 ````JSP
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 ...
@@ -241,7 +241,7 @@ bundleService.getLocalisationString("some.example.language.pack.key", "My Param 
 ````
 
 ### Javascript ###
-[ATD's Bundle Utilities Library](https://github.com/AllTheDucks/b2-bundle-utils) provides a mechenism for retrieveing messages from the language pack in your javascript too:
+[ATD's Bundle Utilities Library](https://github.com/AllTheDucks/b2-bundle-utils) provides a mechanism for retrieving messages from the language pack in your Javascript too:
 
 By default, the servlet required for this is not installed. It is however, commented out in the `web.xml` ready to be added:
 ````XML
