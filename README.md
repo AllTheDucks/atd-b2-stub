@@ -107,6 +107,41 @@ Now render your page using JSP:
 
 The [Stripes Framework Documentation](https://stripesframework.atlassian.net/wiki/display/STRIPES/Home) provides more details.
 
+## Bind an action to a pretty URL ##
+You can use Stripes to bind pretty URLs to your `ActionBean`s. To do this, you annotate your `ActionBean` with `@UrlBinding`:
+
+````Java
+@UrlBinding("/myaction")
+public class MyActionBean implements ActionBean {
+    ...
+}
+````
+
+Now you need to make sure that requests to this path are forwarded to the the `DispatcherServlet`. In the `src/main/webapp/WEB-INF/web.xml` file ensure that there is a `<servlet-mapping>` that matches this path:
+
+````XML
+<servlet-mapping>
+    <servlet-name>StripesDispatcher</servlet-name>
+    <url-pattern>/myaction</url-pattern>
+</servlet-mapping>
+````
+
+You may wish to use a URL pattern to avoid creating a new `<servlet-mapping>` for each `ActionBean`. As an example, you might wish to map all paths that start with `/action` to the `DispatcherServlet` and then use `@UrlBinding`s that match the URL pattern:
+
+````XML
+<servlet-mapping>
+    <servlet-name>StripesDispatcher</servlet-name>
+    <url-pattern>/actions/*</url-pattern>
+</servlet-mapping>
+````
+
+````Java
+@UrlBinding("/actions/my")
+public class MyActionBean implements ActionBean {
+    ...
+}
+````
+
 ## Inject a bean using Spring dependency injection ##
 The B2 stub uses [Spring Beans](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/beans.html) for dependency injection. 
 
